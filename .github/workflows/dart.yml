@@ -2,43 +2,41 @@ name: Frontend CI/CD pipeline
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Setup Flutter
-      uses: subosito/flutter-action@v2
-      with:
-        flutter-version: '3.22.0'
-        channel: 'stable'
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.41.4'
+          channel: stable
 
-    - name: Verify Flutter installation
-      run: flutter doctor
+      - name: Verify Flutter installation
+        run: flutter doctor
 
-    - name: Install dependencies
-      run: flutter pub get
+      - name: Install dependencies
+        run: flutter pub get
 
-    - name: Analyze code
-      run: flutter analyze
+      - name: Analyze code
+        run: flutter analyze
 
-    - name: Run tests
-      run: flutter test
+      - name: Run tests
+        run: flutter test
 
-    - name: Build APK
-      run: flutter build apk --release
+      - name: Build APK
+        run: flutter build apk --release
 
-    - name: Upload APK Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: flutter-apk
-        path: build/app/outputs/flutter-apk/app-release.apk
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: flutter-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
